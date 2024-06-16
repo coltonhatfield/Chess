@@ -1,0 +1,61 @@
+import java.util.ArrayList;
+public class Queen extends ChessPiece
+{
+    public Queen(boolean isWhite) {
+        super(isWhite);
+    }
+    
+    public boolean getColor() {
+        return isWhite;
+    }
+    
+    public  String getName() {
+        return "Queen";
+    }
+    
+    public ArrayList<Integer> getLegalMoves(int row, int col, ChessPiece[][] array) {
+        ArrayList<Integer> Legal = new ArrayList<Integer>();
+        for(int i = -7; i < 8; i++) {
+            if(row + i >= 0 && row + i <= 7) {
+                if(array[row + i][col] != null && array[row + i][col].getColor() != array[row][col].getColor()) {
+                    Legal.add(row + i);
+                    Legal.add(col);
+                } else if(array[row + i][col] == null){
+                    Legal.add(row + i);
+                    Legal.add(col);
+                }
+            }
+        }
+        
+        for(int i = -7; i < 8; i++) {
+            if(col + i >= 0 && col + i <= 7) {
+                if(array[row][col + i] != null && array[row][col + i].getColor() != array[row][col].getColor()) {
+                    Legal.add(row);
+                    Legal.add(col + i);
+                } else if(array[row][col + i] == null){
+                    Legal.add(row);
+                    Legal.add(col + i);
+                }
+            }
+        }
+        //end of rook logic
+        for(int i = -7; i < 8; i++) {
+            for(int a = -7; a < 8; a++) {
+                if(i == 0) {
+                    i++;
+                }
+                if(row + i >= 0 && row + i <= 7 && col + a >= 0 && col + a <= 7 && ((double)a / i == 1 || (double)a / i == -1)) {
+                    if(!array[row + i][col + a].getName().equals("Empty") && array[row + i][col + a].getColor() != array[row][col].getColor()) {
+                        Legal.add(row + i);
+                        Legal.add(col + a);
+                    } else if(array[row + i][col + a].getName().equals("Empty")){
+                        Legal.add(row + i);
+                        Legal.add(col + a);
+                    }
+                }
+            }
+        }
+        //end of bishop logic
+        return Legal;
+    }
+}
