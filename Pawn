@@ -1,0 +1,73 @@
+import java.util.ArrayList;
+public class Pawn extends ChessPiece
+{
+    public Pawn(boolean isWhite) {
+        super(isWhite);
+    }
+    
+    public boolean getColor() {
+        return isWhite;
+    }
+    
+    public  String getName() {
+        return "Pawn";
+    }
+    
+    
+    public ArrayList<Integer> getLegalMoves(int row, int col, ChessPiece[][] array) {
+        ArrayList<Integer> Legal = new ArrayList<Integer>();
+        
+        if(array[row][col].getColor() == false) {
+            for(int i = 1; i < 3; i++) {
+                for(int a = -1; a < 2; a++) {
+                    if(row + i >= 0 && row + i <= 7 && col + a >= 0 && col + a <= 7 && row == 1) {
+                        if(!array[row + i][col + a].getName().equals("Empty") && array[row + i][col + a].getColor() != array[row][col].getColor() && (a / i == 1 || a / i == -1)) {
+                            Legal.add(row + i);
+                            Legal.add(col + a);
+                        } else if(array[row + i][col + a].getName().equals("Empty") && a == 0){
+                            Legal.add(row + i);
+                            Legal.add(col);
+                        }
+                    } else if (row + i >= 0 && row + i <= 7 && col + a >= 0 && col + a <= 7) {
+                        if(!array[row + i][col + a].getName().equals("Empty") && array[row + i][col + a].getColor() != array[row][col].getColor() && (a / i == 1 || a / i == -1)) {
+                            Legal.add(row + i);
+                            Legal.add(col + a);
+                        } else if(array[row + i][col + a].getName().equals("Empty") && a == 0 && i == 1){
+                            Legal.add(row + i);
+                            Legal.add(col);
+                        }
+                    }
+                }
+            }
+        } else {
+            for(int i = -1; i > -3; i--) {
+                for(int a = -1; a < 2; a++) {
+                    if(row + i >= 0 && row + i <= 7 && col + a >= 0 && col + a <= 7 && row == 6) {
+                        if(!array[row + i][col + a].getName().equals("Empty") && array[row + i][col + a].getColor() != array[row][col].getColor() && (a / i == 1 || a / i == -1)) {
+                            Legal.add(row + i);
+                            Legal.add(col + a);
+                        } else if(array[row + i][col + a].getName().equals("Empty") && a == 0){
+                            Legal.add(row + i);
+                            Legal.add(col);
+                        }
+                    } else if (row + i >= 0 && row + i <= 7 && col + a >= 0 && col + a <= 7) {
+                        if(!array[row + i][col + a].getName().equals("Empty") && array[row + i][col + a].getColor() != array[row][col].getColor() && (a / i == 1 || a / i == -1)) {
+                            Legal.add(row + i);
+                            Legal.add(col + a);
+                        } else if(array[row + i][col + a].getName().equals("Empty") && a == 0 && i == -1){
+                            Legal.add(row + i);
+                            Legal.add(col);
+                        }
+                    }
+                }
+            }
+        }
+        
+        //System.out.println("\n\n" + Legal + "\n\n");
+        return Legal;
+    }
+}
+
+
+
+
