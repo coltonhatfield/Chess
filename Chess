@@ -1,0 +1,503 @@
+/*
+ * Chess
+ * By Colton Hatfield
+ * 5/27/2022 at 12:15 AM
+ * Thank you
+ */
+
+
+
+import java.awt.Color;
+import java.util.ArrayList;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.util.Scanner;
+public class Chess implements ActionListener{
+    private int turn;
+    private boolean isWhiteTurn;
+    private ArrayList<Integer> Legal;
+    private int[] permArray;
+    private JFrame frame;
+    private JPanel panel;
+    private ChessPiece[][] board;
+    private String permName;
+    private JButton[] all;
+    private int permInt;
+    private String permString;
+    private ChessPiece[] allPieces;
+    private boolean selectNewPiece;
+    
+    public Chess() {
+        //establishing board
+        board = new ChessPiece[8][8];
+        isWhiteTurn = true;
+        turn = 0;
+        permString = new String();
+        selectNewPiece = false;
+        //allPieces = {new Pawn(true), new Pawn(false), new Knight(true), new Knight(false), new Bishop(true), new Bishop(false), new Rook(true), new Rook(false), new Queen(true), new Queen(false)};
+        
+        //creating JFrame
+        frame = new JFrame();
+        frame.setTitle("Chess - Colton Hatfield");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(1600, 1600);
+        frame.setLocationRelativeTo(null);
+        
+        //creating gridLayout and array of JButtons
+        panel = new JPanel(new GridLayout(8, 8, 5, 5));
+        all = new JButton[65];
+        
+        //Creating JButtons
+        all[1] = new JButton("Black Rook 01");
+        all[1].addActionListener(this);
+        panel.add(all[1]);
+        all[2] = new JButton("Black Knight 02");
+        all[2].addActionListener(this);
+        panel.add(all[2]);
+        all[3] = new JButton("Black Bishop 03");
+        all[3].addActionListener(this);
+        panel.add(all[3]);
+        all[4] = new JButton("Black Queen 04");
+        all[4].addActionListener(this);
+        panel.add(all[4]);
+        all[5] = new JButton("Black King 05");
+        all[5].addActionListener(this);
+        panel.add(all[5]);
+        all[6] = new JButton("Black Bishop 06");
+        all[6].addActionListener(this);
+        panel.add(all[6]);
+        all[7] = new JButton("Black Knight 07");
+        all[7].addActionListener(this);
+        panel.add(all[7]);
+        all[8] = new JButton("Black Rook 08");
+        all[8].addActionListener(this);
+        panel.add(all[8]);
+        all[9] = new JButton("Black Pawn 09");
+        all[9].addActionListener(this);
+        panel.add(all[9]);
+        all[10] = new JButton("Black Pawn 10");
+        all[10].addActionListener(this);
+        panel.add(all[10]);
+        all[11] = new JButton("Black Pawn 11");
+        all[11].addActionListener(this);
+        panel.add(all[11]);
+        all[12] = new JButton("Black Pawn 12");
+        all[12].addActionListener(this);
+        panel.add(all[12]);
+        all[13] = new JButton("Black Pawn 13");
+        all[13].addActionListener(this);
+        panel.add(all[13]);
+        all[14] = new JButton("Black Pawn 14");
+        all[14].addActionListener(this);
+        panel.add(all[14]);
+        all[15] = new JButton("Black Pawn 15");
+        all[15].addActionListener(this);
+        panel.add(all[15]);
+        all[16] = new JButton("Black Pawn 16");
+        all[16].addActionListener(this);
+        panel.add(all[16]);
+        all[17] = new JButton("17");
+        all[17].addActionListener(this);
+        panel.add(all[17]);
+        all[18] = new JButton("18");
+        all[18].addActionListener(this);
+        panel.add(all[18]);
+        all[19] = new JButton("19");
+        all[19].addActionListener(this);
+        panel.add(all[19]);
+        all[20] = new JButton("20");
+        all[20].addActionListener(this);
+        panel.add(all[20]);
+        all[21] = new JButton("21");
+        all[21].addActionListener(this);
+        panel.add(all[21]);
+        all[22] = new JButton("22");
+        all[22].addActionListener(this);
+        panel.add(all[22]);
+        all[23] = new JButton("23");
+        all[23].addActionListener(this);
+        panel.add(all[23]);
+        all[24] = new JButton("24");
+        all[24].addActionListener(this);
+        panel.add(all[24]);
+        all[25] = new JButton("25");
+        all[25].addActionListener(this);
+        panel.add(all[25]);
+        all[26] = new JButton("26");
+        all[26].addActionListener(this);
+        panel.add(all[26]);
+        all[27] = new JButton("27");
+        all[27].addActionListener(this);
+        panel.add(all[27]);
+        all[28] = new JButton("28");
+        all[28].addActionListener(this);
+        panel.add(all[28]);
+        all[29] = new JButton("29");
+        all[29].addActionListener(this);
+        panel.add(all[29]);
+        all[30] = new JButton("30");
+        all[30].addActionListener(this);
+        panel.add(all[30]);
+        all[31] = new JButton("31");
+        all[31].addActionListener(this);
+        panel.add(all[31]);
+        all[32] = new JButton("32");
+        all[32].addActionListener(this);
+        panel.add(all[32]);
+        all[33] = new JButton("33");
+        all[33].addActionListener(this);
+        panel.add(all[33]);
+        all[34] = new JButton("34");
+        all[34].addActionListener(this);
+        panel.add(all[34]);
+        all[35] = new JButton("35");
+        all[35].addActionListener(this);
+        panel.add(all[35]);
+        all[36] = new JButton("36");
+        all[36].addActionListener(this);
+        panel.add(all[36]);
+        all[37] = new JButton("37");
+        all[37].addActionListener(this);
+        panel.add(all[37]);
+        all[38] = new JButton("38");
+        all[38].addActionListener(this);
+        panel.add(all[38]);
+        all[39] = new JButton("39");
+        all[39].addActionListener(this);
+        panel.add(all[39]);
+        all[40] = new JButton("40");
+        all[40].addActionListener(this);
+        panel.add(all[40]);
+        all[41] = new JButton("41");
+        all[41].addActionListener(this);
+        panel.add(all[41]);
+        all[42] = new JButton("42");
+        all[42].addActionListener(this);
+        panel.add(all[42]);
+        all[43] = new JButton("43");
+        all[43].addActionListener(this);
+        panel.add(all[43]);
+        all[44] = new JButton("44");
+        all[44].addActionListener(this);
+        panel.add(all[44]);
+        all[45] = new JButton("45");
+        all[45].addActionListener(this);
+        panel.add(all[45]);
+        all[46] = new JButton("46");
+        all[46].addActionListener(this);
+        panel.add(all[46]);
+        all[47] = new JButton("47");
+        all[47].addActionListener(this);
+        panel.add(all[47]);
+        all[48] = new JButton("48");
+        all[48].addActionListener(this);
+        panel.add(all[48]);
+        all[49] = new JButton("White Pawn 49");
+        all[49].addActionListener(this);
+        panel.add(all[49]);
+        all[50] = new JButton("White Pawn 50");
+        all[50].addActionListener(this);
+        panel.add(all[50]);
+        all[51] = new JButton("White Pawn 51");
+        all[51].addActionListener(this);
+        panel.add(all[51]);
+        all[52] = new JButton("White Pawn 52");
+        all[52].addActionListener(this);
+        panel.add(all[52]);
+        all[53] = new JButton("White Pawn 53");
+        all[53].addActionListener(this);
+        panel.add(all[53]);
+        all[54] = new JButton("White Pawn 54");
+        all[54].addActionListener(this);
+        panel.add(all[54]);
+        all[55] = new JButton("White Pawn 55");
+        all[55].addActionListener(this);
+        panel.add(all[55]);
+        all[56] = new JButton("White Pawn 56");
+        all[56].addActionListener(this);
+        panel.add(all[56]);
+        all[57] = new JButton("White Rook 57");
+        all[57].addActionListener(this);
+        panel.add(all[57]);
+        all[58] = new JButton("White Knight 58");
+        all[58].addActionListener(this);
+        panel.add(all[58]);
+        all[59] = new JButton("White Bishop 59");
+        all[59].addActionListener(this);
+        panel.add(all[59]);
+        all[60] = new JButton("White Queen 60");
+        all[60].addActionListener(this);
+        panel.add(all[60]);
+        all[61] = new JButton("White King 61");
+        all[61].addActionListener(this);
+        panel.add(all[61]);
+        all[62] = new JButton("White Bishop 62");
+        all[62].addActionListener(this);
+        panel.add(all[62]);
+        all[63] = new JButton("White Knight 63");
+        all[63].addActionListener(this);
+        panel.add(all[63]);
+        all[64] = new JButton("White Rook 64");
+        all[64].addActionListener(this);
+        panel.add(all[64]);
+
+
+        //creating 2-d array board
+        
+        for(int i = 0; i < 8; i++) {
+            board[6][i] = new Pawn(true);
+            board[1][i] = new Pawn(false);
+            
+        }
+        
+        for(int i = 0; i < 8; i +=7) {
+            board[7][i] = new Rook(true);
+            board[0][i] = new Rook(false);
+        }
+        for(int i = 1; i < 8; i += 5) {
+            board[7][i] = new Knight(true);
+            board[0][i] = new Knight(false);
+        }
+        for(int i = 2; i < 6; i += 3) {
+            board[7][i] = new Bishop(true);
+            board[0][i] = new Bishop(false);
+        }
+        for(int i = 2; i < 6; i++) {
+            for(int a = 0; a < 8; a++) {
+                board[i][a] = new Empty(true);
+            }
+        }
+        
+       
+        
+        board[7][3] = new Queen(true);
+        board[0][3] = new Queen(false);
+        board[7][4] = new King(true);
+        board[0][4] = new King(false);
+        
+        //setting colors
+        Color white = new Color(225, 209, 198);
+        Color red = new Color(189, 143, 130);
+        boolean dif = false;
+        for(int i = 1; i < 65; i++) {
+            if(dif == false) {
+                if(i % 2 == 0) {
+                    all[i].setBackground(white);
+                } else {
+                    all[i].setBackground(red);
+                }
+            } else {
+                if(i % 2 == 0) {
+                    all[i].setBackground(red);
+                } else {
+                    all[i].setBackground(white);
+                }
+            }
+            
+            if(i % 8 == 0) {
+                dif = !dif;
+            }
+        }
+        
+        
+        for(int i = 1; i < 65; i++) {
+            all[i].setFont(new Font("Arial", Font.PLAIN, 19));
+        }
+        
+         
+        //finishing and making JPanel visible
+        frame.add(panel);
+        frame.pack();
+        frame.setVisible(true);
+    }
+    
+    //converts the array of JButtons to coordinates on the 2-d Array
+    public static int[] numToArray(int col) {
+        col = col - 1;
+        int row = 0;
+        boolean x = true;
+        while(x == true) {
+            if(col > 7) {
+                row++;
+                col -=8;
+            } else {
+                break;
+            }
+        }
+        
+        int [] coordinates = {row, col};
+        return coordinates;
+    }
+    
+    public static String booleanToColor(boolean x) {
+        if(x == false) {
+            return "Black";
+        }
+        return "White";
+    }
+    
+    public static int arrayToNum(int row, int col) {
+        return 1 + (col*8) + row;
+    }
+    
+    
+    //Runs constructer
+    public static void main (String[]args) {
+        new Chess();
+    }
+    
+    //if a button is clicked this runs
+    public void actionPerformed(ActionEvent e) {
+        Scanner scan = new Scanner(System.in);
+        JButton o = (JButton)e.getSource();
+        String name = o.getText();
+        int tempInt = Integer.parseInt(name.substring(name.length() - 2, name.length()));
+        
+        //changes format to 2-d
+        int[] tempArray = numToArray(tempInt);
+        
+
+        
+        if(turn == 0) {
+            if(!board[tempArray[0]][tempArray[1]].getName().equals("Empty") && board[tempArray[0]][tempArray[1]].getColor() == isWhiteTurn) {
+                permArray = tempArray;
+                permInt = tempInt;
+                turn = 1;
+            }
+        } else {
+            ArrayList<Integer> Legal = board[permArray[0]][permArray[1]].getLegalMoves(permArray[0], permArray[1], board);
+            for(int i = 0; i < Legal.size(); i += 2) {
+                if(Legal.get(i) == tempArray[0] && Legal.get(i + 1) == tempArray[1]) {
+                    //code for if a pawn reaches the end
+                    
+                    
+                    
+                    
+                    
+                    
+                    String str = all[tempInt].getText();
+                    String str2 = all[permInt].getText();
+                    
+                    
+                    if(selectNewPiece == true) {
+                        if(isWhiteTurn == false) {
+                            if(str.equals("Queen")) {
+                                all[permInt].setText("Black Queen " + str2.substring(all[permInt].getText().length() - 2, all[permInt].getText().length()));
+                                board[permArray[0]][permArray[1]] = new Queen(false);
+                            } else if (str.equals("Rook")) {
+                                all[permInt].setText("Black Rook " + str2.substring(all[permInt].getText().length() - 2, all[permInt].getText().length()));
+                                board[permArray[0]][permArray[1]] = new Rook(false);
+                            } else if (str.equals("Bishop")) {
+                                all[permInt].setText("Black Bishop " + str2.substring(all[permInt].getText().length() - 2, all[permInt].getText().length()));
+                                board[permArray[0]][permArray[1]] = new Bishop(false);
+                            } else if (str.equals("Knight")) {
+                                all[permInt].setText("Black Knight " + str2.substring(all[permInt].getText().length() - 2, all[permInt].getText().length()));
+                                board[permArray[0]][permArray[1]] = new Knight(false);
+                            }
+                            for(int a = 0; a < 8; a++) {
+                                for(int b = 0; b < 8; b++) {
+                                    if(!board[a][b].getName().equals(all[arrayToNum(a, b)].getText().substring(0, all[arrayToNum(a, b)].getText().length() - 2)) || (board[a][b].getName().equals("Empty") && all[arrayToNum(a, b)].getText().length() != 2)) {
+                                        if(board[a][b].getName().equals("Queen")) {
+                                            all[arrayToNum(a, b)].setText(booleanToColor(board[a][b].getColor()) + " Queen " + all[arrayToNum(a, b)].getText().substring(all[arrayToNum(a, b)].getText().length() - 2, all[arrayToNum(a, b)].getText().length()));
+                                        } else if (board[a][b].getName().equals("Rook")) {
+                                            all[arrayToNum(a, b)].setText(booleanToColor(board[a][b].getColor()) + " Rook " + all[arrayToNum(a, b)].getText().substring(all[arrayToNum(a, b)].getText().length() - 2, all[arrayToNum(a, b)].getText().length()));
+                                        } else if (board[a][b].getName().equals("Bishop")) {
+                                            all[arrayToNum(a, b)].setText(booleanToColor(board[a][b].getColor()) + " Bishop " + all[arrayToNum(a, b)].getText().substring(all[arrayToNum(a, b)].getText().length() - 2, all[arrayToNum(a, b)].getText().length()));
+                                        } else if (board[a][b].getName().equals("Knight")) {
+                                            all[arrayToNum(a, b)].setText(booleanToColor(board[a][b].getColor()) + " Knight " + all[arrayToNum(a, b)].getText().substring(all[arrayToNum(a, b)].getText().length() - 2, all[arrayToNum(a, b)].getText().length()));
+                                        } else if (board[a][b].getName().equals("Pawn")) {
+                                            all[arrayToNum(a, b)].setText(booleanToColor(board[a][b].getColor()) + " Pawn " + all[arrayToNum(a, b)].getText().substring(all[arrayToNum(a, b)].getText().length() - 2, all[arrayToNum(a, b)].getText().length()));
+                                        } else if (board[a][b].getName().equals("King")) {
+                                            all[arrayToNum(a, b)].setText(booleanToColor(board[a][b].getColor()) + " King " + all[arrayToNum(a, b)].getText().substring(all[arrayToNum(a, b)].getText().length() - 2, all[arrayToNum(a, b)].getText().length()));
+                                        }
+                                    }
+                                }
+                            }
+                        } else {
+                            if(str.equals("Queen " + permInt)) {
+                                all[permInt].setText("White Queen " + str2.substring(all[permInt].getText().length() - 2, all[permInt].getText().length()));
+                                board[permArray[0]][permArray[1]] = new Queen(false);
+                            } else if (str.equals("Rook " + permInt)) {
+                                all[permInt].setText("White Rook " + str2.substring(all[permInt].getText().length() - 2, all[permInt].getText().length()));
+                                board[permArray[0]][permArray[1]] = new Rook(false);
+                            } else if (str.equals("Bishop " + permInt)) {
+                                all[permInt].setText("White Bishop " + str2.substring(all[permInt].getText().length() - 2, all[permInt].getText().length()));
+                                board[permArray[0]][permArray[1]] = new Bishop(false);
+                            } else if (str.equals("Knight " + permInt)) {
+                                all[permInt].setText("White Knight " + str2.substring(all[permInt].getText().length() - 2, all[permInt].getText().length()));
+                                board[permArray[0]][permArray[1]] = new Knight(false);
+                            }
+                        }
+                        
+                        
+                    }
+                    
+                    
+                    if(selectNewPiece == false) {
+                        board[tempArray[0]][tempArray[1]] = board[permArray[0]][permArray[1]];
+                        board[permArray[0]][permArray[1]] = new Empty(true);
+                        int permIntLength = all[permInt].getText().length();
+                        int tempIntLength = all[tempInt].getText().length();
+                        //sets current button to equal previous button while retaining its number
+                        all[tempInt].setText(all[permInt].getText().substring(0, permIntLength - 2) + all[tempInt].getText().substring(tempIntLength - 2, tempIntLength));
+                        //sets previous button press's text to just its number
+                        all[permInt].setText(str2.substring(all[permInt].getText().length() - 2, all[permInt].getText().length()));
+                    }
+                    
+                    
+                    
+                    
+                    
+                    
+                    if((tempArray[0] == 0 || tempArray[0] == 7) && board[tempArray[0]][tempArray[1]].getName().equals("Pawn") && selectNewPiece == false) {
+                        selectNewPiece = true;
+                        if(tempArray[0] == 0) {
+                            all[tempInt + 8].setText("Queen " + all[tempInt + 8].getText().substring(all[tempInt + 8].getText().length() - 2, all[tempInt + 8].getText().length()));
+                            all[tempInt + 16].setText("Rook " + all[tempInt + 16].getText().substring(all[tempInt + 16].getText().length() - 2, all[tempInt + 16].getText().length()));
+                            all[tempInt + 24].setText("Bishop " + all[tempInt + 24].getText().substring(all[tempInt + 24].getText().length() - 2, all[tempInt + 24].getText().length()));
+                            all[tempInt + 32].setText("Knight " + all[tempInt + 32].getText().substring(all[tempInt + 32].getText().length() - 2, all[tempInt + 32].getText().length()));
+                        } else {
+                            all[tempInt - 8].setText("Queen " + all[tempInt - 8].getText().substring(all[tempInt - 8].getText().length() - 2, all[tempInt - 8].getText().length()));
+                            all[tempInt - 16].setText("Rook " + all[tempInt - 16].getText().substring(all[tempInt - 16].getText().length() - 2, all[tempInt - 16].getText().length()));
+                            all[tempInt - 24].setText("Bishop " + all[tempInt - 24].getText().substring(all[tempInt - 24].getText().length() - 2, all[tempInt - 24].getText().length()));
+                            all[tempInt - 32].setText("Knight " + all[tempInt - 32].getText().substring(all[tempInt - 32].getText().length() - 2, all[tempInt - 32].getText().length()));
+                        }
+                        /*
+                        if(palindrome.equals("Queen")) {
+                            board[tempArray[0]][tempArray[1]] = new Queen(isWhiteTurn);
+                            break;
+                        } else if(palindrome.equals("Bishop")) {
+                            board[tempArray[0]][tempArray[1]] = new Bishop(isWhiteTurn);
+                            break;
+                        } else if(palindrome.equals("Rook")) {
+                            board[tempArray[0]][tempArray[1]] = new Rook(isWhiteTurn);
+                            break;
+                        } else if(palindrome.equals("Knight")) {
+                            board[tempArray[0]][tempArray[1]] = new Knight(isWhiteTurn);
+                            break;
+                        }
+                        */
+                        
+                    }
+                    
+                    if(selectNewPiece == false) {
+                        
+                        
+                        turn = 0;
+                        isWhiteTurn = !isWhiteTurn;
+                    }
+                    
+                    
+                    break;
+                }
+            }
+            turn = 0;
+        }
+        
+        
+    }
+    
+}
+
