@@ -1,0 +1,17 @@
+import java.util.ArrayList;
+public abstract class ChessPiece {
+    protected boolean isWhite;
+    
+    public ChessPiece(boolean isWhite) {
+        this.isWhite = isWhite;
+    }
+    
+    public boolean getColor() {
+        return isWhite;
+    }
+    
+    public abstract ArrayList<Integer> getLegalMoves(int x, int y, ChessPiece[][] array);
+    public abstract String getName();
+}
+
+
