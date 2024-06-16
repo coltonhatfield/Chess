@@ -1,0 +1,84 @@
+import java.util.ArrayList;
+public class Bishop extends ChessPiece {
+    public Bishop(boolean isWhite) {
+        super(isWhite);
+    }
+    
+    public boolean getColor() {
+        return isWhite;
+    }
+    
+    public String getName() {
+        return "Bishop";
+    }
+    
+    public ArrayList<Integer> getLegalMoves(int row, int col, ChessPiece[][] array) {
+        ArrayList<Integer> Legal = new ArrayList<Integer>();
+        
+        for(int i = -7; i < 8; i++) {
+            for(int a = -7; a < 8; a++) {
+                if(i == 0) {
+                    i++;
+                }
+                if(a == 0) {
+                    a++;
+                }
+                if(row + i >= 0 && row + i <= 7 && col + a >= 0 && col + a <= 7 && Math.abs((double) a / i) == 1) {
+                    if(!array[row + i][col + a].getName().equals("Empty") && array[row + i][col + a].getColor() != array[row][col].getColor()) {
+                        Legal.add(row + i);
+                        Legal.add(col + a);
+                    } else if(array[row + i][col + a].getName().equals("Empty")){
+                        Legal.add(row + i);
+                        Legal.add(col + a);
+                    }
+                }
+            }
+        }
+        
+       
+        /*
+        for(int i = -7; i <= 7; i++) {
+            if(i == 0) {
+                i++;
+            }
+            if(row + i >= 0 && row + i <= 7 && col + i >= 0 && col + i <= 7) {
+                if(array[row + i][col + i] != null && array[row + i][col + i].getColor() != array[row][col].getColor()) {
+                        Legal.add(row + i);
+                        Legal.add(col + i);
+                    } else if(array[row + i][col + i] == null){
+                        Legal.add(row + i);
+                        Legal.add(col + i);
+                    }
+            }
+            if(row - i >= 0 && row - i <= 7 && col + i >= 0 && col + i <= 7) {
+                if(array[row - i][col + i] != null && array[row - i][col + i].getColor() != array[row][col].getColor()) {
+                        Legal.add(row - i);
+                        Legal.add(col + i);
+                    } else if(array[row - i][col + i] == null){
+                        Legal.add(row - i);
+                        Legal.add(col + i);
+                    }
+            }
+            if(row + i >= 0 && row + i <= 7 && col - i >= 0 && col - i <= 7) {
+                if(array[row + i][col - i] != null && array[row + i][col - i].getColor() != array[row][col].getColor()) {
+                        Legal.add(row + i);
+                        Legal.add(col - i);
+                    } else if(array[row + i][col - i] == null){
+                        Legal.add(row + i);
+                        Legal.add(col - i);
+                    }
+            }
+            if(row - i >= 0 && row - i <= 7 && col - i >= 0 && col - i <= 7) {
+                if(array[row - i][col - i] != null && array[row - i][col - i].getColor() != array[row][col].getColor()) {
+                        Legal.add(row - i);
+                        Legal.add(col - i);
+                    } else if(array[row - i][col - i] == null){
+                        Legal.add(row - i);
+                        Legal.add(col - i);
+                    }
+            }
+        }
+        */
+        return Legal;
+    }
+}
