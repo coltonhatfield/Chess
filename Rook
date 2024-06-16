@@ -1,0 +1,44 @@
+import java.util.ArrayList;
+public class Rook extends ChessPiece
+{
+    public Rook(boolean isWhite) {
+        super(isWhite);
+    }
+    
+    public boolean getColor() {
+        return isWhite;
+    }
+    
+    public  String getName() {
+        return "Rook";
+    }
+    
+    public ArrayList<Integer> getLegalMoves(int row, int col, ChessPiece[][] array) {
+        ArrayList<Integer> Legal = new ArrayList<Integer>();
+        for(int i = -7; i < 8; i++) {
+            if(row + i >= 0 && row + i <= 7) {
+                if(!array[row + i][col].getName().equals("Empty") && array[row + i][col].getColor() != array[row][col].getColor()) {
+                    Legal.add(row + i);
+                    Legal.add(col);
+                } else if(array[row + i][col].getName().equals("Empty")){
+                    Legal.add(row + i);
+                    Legal.add(col);
+                }
+            }
+        }
+        
+        for(int i = -7; i < 8; i++) {
+            if(col + i >= 0 && col + i <= 7) {
+                if(!array[row][col + i].getName().equals("Empty") && array[row][col + i].getColor() != array[row][col].getColor()) {
+                    Legal.add(row);
+                    Legal.add(col + i);
+                } else if(array[row][col + i].getName().equals("Empty")){
+                    Legal.add(row);
+                    Legal.add(col + i);
+                }
+            }
+        }
+        return Legal;
+    }
+}
+
